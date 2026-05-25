@@ -1,0 +1,6 @@
+requests
+psycopg2-binary
+pyspark==3.5.1
+pytz
+pytest
+pytest-mock

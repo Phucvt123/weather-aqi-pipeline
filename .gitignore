@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Project logs
+logs/
+*.log
+
+# Streamlit config and cache
+.streamlit/
+
+# Airflow temporary and run files
+airflow.cfg
+airflow.db
+standalone_admin_password.txt
+
+# Local Environment Variables and Secrets
+.env
+.env.local
+
+# Spark and Hadoop temp files
+spark-warehouse/
+metastore_db/
+derby.log
+.ipynb_checkpoints/
