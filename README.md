@@ -8,7 +8,7 @@
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white)
 
-> End-to-end data pipeline thu thập, xử lý và cảnh báo chất lượng không khí cho 11 thành phố Việt Nam. Pipeline tự động lấy dữ liệu từ Open-Meteo API mỗi giờ, xử lý bằng Spark, và hiển thị trên dashboard real-time với predictive alerts.
+> End-to-end data pipeline thu thập, xử lý và cảnh báo chất lượng không khí cho 11 thành phố Việt Nam. Pipeline tự động lấy dữ liệu từ Open-Meteo API mỗi giờ, xử lý bằng Spark, và hiển thị trên dashboard .
 
 ---
 
