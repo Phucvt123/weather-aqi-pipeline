@@ -20,10 +20,8 @@ RUN apt-get update && \
 
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
-# Download Spark 3.5.3 binaries (chỉ dùng spark-submit, không chạy worker)
-RUN curl -fsSL https://archive.apache.org/dist/spark/spark-3.5.3/spark-3.5.3-bin-hadoop3.tgz \
-    | tar -xz -C /opt/ && \
-    ln -s /opt/spark-3.5.3-bin-hadoop3 /opt/spark
+# Copy Spark 3.5.3 binaries from local spark image (chỉ dùng spark-submit client)
+COPY --from=bitnamilegacy/spark:3.5.3 /opt/bitnami/spark /opt/spark
 
 ENV SPARK_HOME=/opt/spark
 ENV PATH="${SPARK_HOME}/bin:${PATH}"

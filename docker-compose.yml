@@ -43,7 +43,7 @@ services:
   # ──────────────────────────── Storage Layer ────────────────────────────
 
   minio:
-    image: minio/minio:latest
+    image: cgr.dev/chainguard/minio:latest
     container_name: lakehouse-minio
     environment:
       MINIO_ROOT_USER: minioadmin
@@ -55,7 +55,7 @@ services:
     volumes:
       - minio_data:/data
     healthcheck:
-      test: ["CMD", "mc", "ready", "local"]
+      test: ["CMD", "/bin/bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/9000"]
       interval: 10s
       retries: 5
     deploy:
@@ -65,7 +65,7 @@ services:
 
   # Create the 'lake' bucket on first boot
   minio-init:
-    image: minio/mc:latest
+    image: cgr.dev/chainguard/minio-client:latest-dev
     container_name: lakehouse-minio-init
     depends_on:
       minio:
@@ -117,7 +117,7 @@ services:
   # ──────────────────────────── Compute: Spark ────────────────────────────
 
   spark-master:
-    image: bitnami/spark:3.5.3
+    image: bitnamilegacy/spark:3.5.3
     container_name: lakehouse-spark-master
     environment:
       SPARK_MODE: master
@@ -143,7 +143,7 @@ services:
           memory: 512M
 
   spark-worker:
-    image: bitnami/spark:3.5.3
+    image: bitnamilegacy/spark:3.5.3
     container_name: lakehouse-spark-worker
     environment:
       SPARK_MODE: worker
@@ -202,13 +202,6 @@ services:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
-    command: >
-      bash -c "
-        docker-entrypoint.sh postgres &
-        until pg_isready -U airflow; do sleep 1; done
-        psql -U airflow -c 'CREATE DATABASE nessie;' 2>/dev/null || true
-        wait
-      "
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "airflow"]
       interval: 10s
@@ -217,6 +210,7 @@ services:
       - "5435:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
+      - ./infra/postgres/init-databases.sql:/docker-entrypoint-initdb.d/init-databases.sql:ro
     deploy:
       resources:
         limits:
